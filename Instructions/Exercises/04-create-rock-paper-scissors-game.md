@@ -26,29 +26,66 @@ You'll write and run your code in Visual Studio Code.
 
 1. Make sure your Python environment is active. You should see a Python version displayed in the bottom status bar. If you see a warning, select it and choose your installed Python interpreter.
 
-## Get the player's choice
+## Set up your starter code
 
-The first thing your program needs to do is ask the player to choose rock, paper, or scissors.
+Before writing any logic, you'll paste a set of guiding comments into `game.py`. Because part of this program uses an `if`/`else` block, the starter code includes that structure with comment placeholders inside each branch — so you always know exactly where to add each piece of code.
 
-1. In `game.py`, type the following code:
+1. Copy the following code and paste it into `game.py`:
+
+    ```python
+    import random
+
+    # Display the game title
+
+    # Get and display the player's choice
+
+    # Check if the player's choice is invalid
+
+        # Display an invalid input message
+    
+    # Play the game if the player's choice is valid
+
+        # Generate the computer's choice
+
+        # Determine the winner
+    ```
+
+    > **Note**: Be sure to maintain the correct indentation levels.
+
+## Display the game title
+
+1. Beneath the `# Display the game title` comment, add the following lines:
 
     ```python
     print("Rock, Paper, Scissors!")
     print("-" * 23)
+    ```
 
+1. Select the **▶ Run Python File** button in the top-right corner, or open the terminal (**Terminal > New Terminal**) and run:
+
+    ```bash
+    python game.py
+    ```
+
+1. Verify the output:
+
+    ```output
+    Rock, Paper, Scissors!
+    -----------------------
+    ```
+
+## Get the player's choice
+
+1. Beneath the `# Get and display the player's choice` comment, add the following lines:
+
+    ```python
     player = input("Enter your choice (rock, paper, scissors): ").lower()
     print(f"You chose: {player}")
     ```
 
     The `.lower()` method converts whatever the player types to lowercase, so `Rock`, `ROCK`, and `rock` are all treated the same way.
 
-1. Select the **▶ Run Python File** button in the top-right corner of the editor, or open the terminal (**Terminal > New Terminal**) and enter the command:
-
-    ```bash
-    python game.py
-    ```
-
-1. Type a choice when prompted and verify the output:
+1. Run the program, type a choice when prompted, and verify the output:
 
     ```output
     Rock, Paper, Scissors!
@@ -59,20 +96,25 @@ The first thing your program needs to do is ask the player to choose rock, paper
 
 ## Validate the player's input
 
-Before picking a winner, you should check that the player entered a valid choice. You'll use a comparison operator and logical operators to do this.
+Now you'll replace the placeholder `if` condition with the real validation check. You'll use comparison operators and the `and` logical operator to confirm the player entered a valid choice.
 
-1. Add the following code below your existing lines:
+1. Beneath the `# Check if the player's choice is invalid` comment, add the following line:
 
     ```python
     if player != "rock" and player != "paper" and player != "scissors":
-        print("Invalid choice. Please enter rock, paper, or scissors.")
-    else:
-        print("Valid choice!")
     ```
 
     The `and` operator ensures the error message only shows if the input matches *none* of the valid options.
 
-1. Run the program and test it with an invalid entry such as `lizard`:
+2. Beneath the `# Display an invalid input message` comment, add:
+
+    ```python
+    print("Invalid choice. Please enter rock, paper, or scissors.")
+    ```
+
+    Be sure to maintain the correct indentation levels beneath the `if` statement.
+
+3. Run the program and test it with an invalid entry such as `lizard`:
 
     ```output
     Enter your choice (rock, paper, scissors): lizard
@@ -80,65 +122,48 @@ Before picking a winner, you should check that the player entered a valid choice
     Invalid choice. Please enter rock, paper, or scissors.
     ```
 
-1. Run it again with a valid choice to confirm the `else` branch works.
+4. Run it again with a valid choice to confirm no error appears.
 
 ## Generate the computer's choice
 
-The computer needs to pick at random. Python includes a built-in `random` module with a `choice()` function that selects a random item from a list.
+The computer needs to pick at random. Python includes a built-in `random` module with a `choice()` function that selects a random item from a list — that `import random` line at the top of your file loads it.
 
-1. Add the following line at the **very top** of your file, before any other code:
-
-    ```python
-    import random
-    ```
-
-    This line loads the `random` module so your program can use it. You'll learn more about modules and imports in a later module — for now, treat this as a built-in tool you can call on.
-
-1. Inside the `else` block (replace `print("Valid choice!")` with these lines), generate and display the computer's pick:
+1. First, add an `else` block beneath the comment `# Play the game if the player's choice is valid`.
 
     ```python
     else:
-        computer = random.choice(["rock", "paper", "scissors"])
-        print(f"Computer chose: {computer}")
     ```
 
-1. Your complete program so far should look like this:
+    This ensures the computer only picks a choice if the player entered a valid one.
+
+2. Beneath the `# Generate the computer's choice` comment (inside the `else` block), add the following lines:
 
     ```python
-    import random
-
-    print("Rock, Paper, Scissors!")
-    print("-" * 23)
-
-    player = input("Enter your choice (rock, paper, scissors): ").lower()
-    print(f"You chose: {player}")
-
-    if player != "rock" and player != "paper" and player != "scissors":
-        print("Invalid choice. Please enter rock, paper, or scissors.")
-    else:
-        computer = random.choice(["rock", "paper", "scissors"])
-        print(f"Computer chose: {computer}")
+    computer = random.choice(["rock", "paper", "scissors"])
+    print(f"Computer chose: {computer}")
     ```
 
-1. Run the program a few times with a valid choice and observe that the computer's choice changes each time.
+    Be sure to maintain the correct indentation levels beneath the `else` statement.
+
+3. Run the program a few times with a valid choice and observe that the computer's choice changes each time.
 
 ## Determine the winner
 
-Now you'll add the game logic. You'll use `if`/`elif`/`else` with the `==` comparison operator and `and` to check every winning condition.
+Now you'll add the game logic inside the `else` block. You'll use `if`/`elif`/`else` with the `==` comparison operator and `and` to check every winning condition.
 
-1. Add the following code inside the `else` block, below the computer choice line:
+1. Beneath the `# Determine the winner` comment (inside the `else` block), add the following lines:
 
     ```python
-        if player == computer:
-            print("It's a tie!")
-        elif player == "rock" and computer == "scissors":
-            print("You win! Rock crushes scissors.")
-        elif player == "paper" and computer == "rock":
-            print("You win! Paper covers rock.")
-        elif player == "scissors" and computer == "paper":
-            print("You win! Scissors cuts paper.")
-        else:
-            print(f"Computer wins! {computer.capitalize()} beats {player}.")
+    if player == computer:
+        print("It's a tie!")
+    elif player == "rock" and computer == "scissors":
+        print("You win! Rock crushes scissors.")
+    elif player == "paper" and computer == "rock":
+        print("You win! Paper covers rock.")
+    elif player == "scissors" and computer == "paper":
+        print("You win! Scissors cuts paper.")
+    else:
+        print(f"Computer wins! {computer.capitalize()} beats {player}.")
     ```
 
     Each `elif` uses `and` to check two conditions at once: both the player's choice *and* the computer's choice must match for that branch to run.
@@ -148,18 +173,26 @@ Now you'll add the game logic. You'll use `if`/`elif`/`else` with the `==` compa
     ```python
     import random
 
+    # Display the game title
     print("Rock, Paper, Scissors!")
     print("-" * 23)
 
+    # Get and display the player's choice
     player = input("Enter your choice (rock, paper, scissors): ").lower()
     print(f"You chose: {player}")
 
+    # Check if the player's choice is invalid
     if player != "rock" and player != "paper" and player != "scissors":
+        # Display an invalid input message
         print("Invalid choice. Please enter rock, paper, or scissors.")
+        
+    # Play the game if the player's choice is valid
     else:
+        # Generate the computer's choice
         computer = random.choice(["rock", "paper", "scissors"])
         print(f"Computer chose: {computer}")
 
+        # Determine the winner
         if player == computer:
             print("It's a tie!")
         elif player == "rock" and computer == "scissors":

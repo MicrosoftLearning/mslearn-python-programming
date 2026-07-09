@@ -26,11 +26,29 @@ You'll write and run your code using an online Python editor — no installation
 
 1. The editor may contain some default code. Select all of it and delete it so you're starting with a clean, empty file.
 
+## Set up your program
+
+Before writing any logic, you'll paste a set of guiding comments into the editor. These comments act as an outline for your program — each one marks where a specific piece of code belongs.
+
+1. Copy the following comments and paste them into the editor pane:
+
+    ```python
+    # Display a welcome message
+
+    # Ask for the user's name
+
+    # Display a personalized greeting
+
+    # Ask for the user's favorite color and extend the greeting
+    ```
+
+    Remember, comments are ignored by Python when the program runs. They're just there to help you organize your code.
+
 ## Display a welcome message
 
 The first thing your program should do is greet the user when it starts. You'll use the `print()` function to display a message on the screen.
 
-1. In the editor pane, type the following code:
+1. In the editor pane, add the following line beneath the `# Display a welcome message` comment:
 
     ```python
     print("Welcome to the greeting program!")
@@ -48,9 +66,9 @@ The first thing your program should do is greet the user when it starts. You'll 
 
 ## Ask for the user's name
 
-Now you'll update the program to pause and ask for the user's name. The `input()` function displays a prompt and waits for the user to type a response.
+Now you'll add code that pauses the program and asks for the user's name. The `input()` function displays a prompt and waits for the user to type a response.
 
-1. Add the following line below your existing code:
+1. Beneath the `# Ask for the user's name` comment, add the following line:
 
     ```python
     name = input("What is your name? ")
@@ -68,17 +86,9 @@ Now you'll update the program to pause and ask for the user's name. The `input()
 
 Now you'll use the `name` variable to build a personalized message. You'll do this with an **f-string** — a string that can embed variable values directly inside it using curly braces `{}`.
 
-1. Add the following line at the end of your code:
+1. Beneath the `# Display a personalized greeting` comment, add the following line:
 
     ```python
-    print(f"Hello, {name}! It's great to meet you.")
-    ```
-
-1. Your complete program should now look like this:
-
-    ```python
-    print("Welcome to the greeting program!")
-    name = input("What is your name? ")
     print(f"Hello, {name}! It's great to meet you.")
     ```
 
@@ -96,7 +106,7 @@ Now you'll use the `name` variable to build a personalized message. You'll do th
 
 Let's make the greeting more personal by also asking for the user's favorite color and including it in the message.
 
-1. Add two more lines below your existing code to ask for a favorite color and include it in a second message:
+1. Beneath the `# Ask for the user's favorite color and extend the greeting` comment, add the following two lines:
 
     ```python
     color = input("What is your favorite color? ")
@@ -106,9 +116,16 @@ Let's make the greeting more personal by also asking for the user's favorite col
 1. Your complete program should now look like this:
 
     ```python
+    # Display a welcome message
     print("Welcome to the greeting program!")
+
+    # Ask for the user's name
     name = input("What is your name? ")
+
+    # Display a personalized greeting
     print(f"Hello, {name}! It's great to meet you.")
+
+    # Ask for the user's favorite color and extend the greeting
     color = input("What is your favorite color? ")
     print(f"Great choice! {color} is a wonderful color.")
     ```
@@ -132,7 +149,7 @@ Using an AI assistant (like Copilot) is  great way to explore a programming lang
 ### Discovery 1: Create a decorative border
 
 **AI Prompt:**
-> "In Python, how can I print 20 dashes in a row without typing them all out? Can you show me an example?"
+```In Python, how can I print 20 dashes in a row without typing them all out? Can you show me an example?```
 
 **After the AI responds:** String repetition is a quick way to draw dividers or format output. Try running any examples the AI gives you in the online editor, and experiment with different characters and lengths.
 
@@ -148,7 +165,7 @@ print("-" * 20)
 ### Discovery 2: Transforming text
 
 **AI Prompt:**
-> "In Python, how can I change a string input to all uppercase, all lowercase, or title case? Can you show me examples of each?"
+```In Python, how can I change a string input to all uppercase, all lowercase, or title case? Can you show me examples of each?```
 
 ***After the AI responds:** Look closely at the code examples it provides. Try modifying your greeting program to use one of these transformations on the user's name or favorite color.
 
@@ -172,7 +189,7 @@ titlecase_name = name.title()
 
 ### Discovery 3: Printing punctuation
 
-> "In Python, what happens if I try to print a string that contains a quote character inside it? How can I do that without causing an error?"
+```In Python, what happens if I try to print a string that contains a quote character inside it? How can I do that without causing an error?```
 
 **After the AI responds:** Pay attention to the different ways it suggests for including quotes in strings. Try each method in the online editor and see how they work.
 

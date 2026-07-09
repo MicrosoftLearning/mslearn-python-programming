@@ -24,11 +24,31 @@ This exercise takes approximately **20** minutes.
 
 1. Clear any default code from the editor so you're starting with a clean file.
 
+## Set up your starter code
+
+Before writing any logic, you'll paste a set of guiding comments into the editor. These comments act as an outline for your program — each one marks where a specific piece of code belongs.
+
+1. Copy the following comments and paste them into the editor pane:
+
+    ```python
+    # Collect subject scores
+
+    # Display the entered scores
+
+    # Calculate the total, average, and GPA
+
+    # Display the results
+    ```
+
+    Remember, comments are ignored by Python when the program runs. They're just there to help you organize your code.
+
+1. Leave the code as-is for now. In the steps that follow, you'll add code beneath each comment.
+
 ## Store grades as variables
 
-You'll start by storing a student's subject scores as variables. Each score is a number out of 100.
+You'll start by storing a student's subject scores as hardcoded variables. Each score is a number out of 100.
 
-1. In the editor pane, type the following code:
+1. Beneath the `# Collect subject scores` comment, add the following lines:
 
     ```python
     math_score    = 88.0
@@ -39,7 +59,7 @@ You'll start by storing a student's subject scores as variables. Each score is a
 
     Each variable holds a **float** — a decimal number. Even though some values like `88.0` could be written as whole numbers, using floats from the start ensures your calculations return accurate decimal results later.
 
-1. Add a `print()` statement to confirm the values are stored correctly:
+1. Beneath the `# Display the entered scores` comment, add the following lines:
 
     ```python
     print("Scores entered:")
@@ -49,7 +69,7 @@ You'll start by storing a student's subject scores as variables. Each score is a
     print(f"  History: {history_score}")
     ```
 
-1. Select the **▶ (Play)** button to run the program. You should see:
+1. Select the **▶ (Run Code)** button to run the program. You should see:
 
     ```output
     Scores entered:
@@ -59,55 +79,33 @@ You'll start by storing a student's subject scores as variables. Each score is a
       History: 83.5
     ```
 
-## Calculate the total and average
+## Calculate the total, average, and GPA
 
-Now you'll use arithmetic to add up the scores and calculate the average.
+Now you'll use arithmetic to add up the scores, calculate the average, and convert it to a GPA on a 4.0 scale using the formula:
 
-1. Add the following code below your existing print statements:
+$$GPA = \frac{average}{100} \times 4.0$$
+
+1. Beneath the `# Calculate the total, average, and GPA` comment, add the following lines of code:
 
     ```python
     total = math_score + english_score + science_score + history_score
     num_subjects = 4
     average = total / num_subjects
-    ```
-
-1. Add a print statement to display the result:
-
-    ```python
-    print(f"\nTotal score:   {total}")
-    print(f"Number of subjects: {num_subjects}")
-    print(f"Average score: {average}")
-    ```
-
-    > **Note**: `\n` inside an f-string adds a blank line before the text, which helps separate sections of output.
-
-1. Run the program. The output should now include:
-
-    ```output
-    Total score:   339.0
-    Number of subjects: 4
-    Average score: 84.75
-    ```
-
-## Convert the average to a GPA
-
-GPA is typically reported on a 4.0 scale. You'll convert the percentage average using a simple formula:
-
-$$GPA = \frac{average}{100} \times 4.0$$
-
-1. Add the following line to perform the conversion:
-
-    ```python
     gpa = (average / 100) * 4.0
     ```
 
-1. Display the final GPA, rounded to two decimal places using Python's built-in `round()` function:
+2. Beneath the `# Display the results` comment, add the following lines of code:
 
     ```python
-    print(f"\nStudent GPA:   {round(gpa, 2)} / 4.0")
+    print(f"\nTotal score:        {total}")
+    print(f"Number of subjects: {num_subjects}")
+    print(f"Average score:      {average}")
+    print(f"\nStudent GPA:        {round(gpa, 2)} / 4.0")
     ```
 
-1. Run the program. Your complete output should now look like:
+    > **Note**: `\n` inside an f-string adds a blank line before the text, which helps separate sections of output. `round(gpa, 2)` rounds the GPA to two decimal places.
+
+3. Run the program. Your complete output should now look like this:
 
     ```output
     Scores entered:
@@ -116,18 +114,18 @@ $$GPA = \frac{average}{100} \times 4.0$$
       Science: 91.0
       History: 83.5
 
-    Total score:   339.0
+    Total score:        339.0
     Number of subjects: 4
-    Average score: 84.75
+    Average score:      84.75
 
-    Student GPA:   3.39 / 4.0
+    Student GPA:        3.39 / 4.0
     ```
 
 ## Accept grades from user input
 
 Hardcoded values are useful for testing, but a real program should accept input from the user. The `input()` function always returns a **string**, so you need to convert it to a `float` before you can use it in calculations.
 
-1. Replace the four hardcoded score variables at the top of your program with `input()` calls that collect scores from the user:
+1. Replace the four hardcoded score variables beneath the `# Collect subject scores` comment with the following `input()` calls:
 
     ```python
     print("Enter scores out of 100 for each subject:\n")
@@ -142,23 +140,27 @@ Hardcoded values are useful for testing, but a real program should accept input 
 1. Keep the rest of your code exactly as it is. Your complete program should now look like this:
 
     ```python
+    # Collect subject scores
     print("Enter scores out of 100 for each subject:\n")
     math_score    = float(input("Math score:    "))
     english_score = float(input("English score: "))
     science_score = float(input("Science score: "))
     history_score = float(input("History score: "))
 
+    # Display the entered scores
     print("\nScores entered:")
     print(f"  Math:    {math_score}")
     print(f"  English: {english_score}")
     print(f"  Science: {science_score}")
     print(f"  History: {history_score}")
 
+    # Calculate the total, average, and GPA
     total = math_score + english_score + science_score + history_score
     num_subjects = 4
     average = total / num_subjects
     gpa = (average / 100) * 4.0
 
+    # Display the results
     print(f"\nTotal score:        {total}")
     print(f"Number of subjects: {num_subjects}")
     print(f"Average score:      {average}")
@@ -167,7 +169,7 @@ Hardcoded values are useful for testing, but a real program should accept input 
 
 1. Run the program. When each prompt appears in the output terminal, click on it, type a score, and press **Enter**.
 
-1. Try entering the same values as before to verify your output matches the hardcoded version:
+2. Try entering the same values as before to verify your output matches the following:
 
     ```output
     Enter scores out of 100 for each subject:
