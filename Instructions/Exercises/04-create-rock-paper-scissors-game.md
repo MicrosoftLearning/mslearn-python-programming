@@ -16,21 +16,31 @@ This exercise takes approximately **30** minutes.
 
 ## Set up your workspace
 
-You'll write and run your code in Visual Studio Code.
+You'll write and run your code in Visual Studio Code. The starter code for this exercise lives in a GitHub repository — you'll clone that repo now if you haven't already.
 
-1. Open **Visual Studio Code**.
+> **Tip**: If you've already cloned the repo during another exercise, skip to the next section.
 
-1. Select **File > Open Folder**, create a new folder called `rock-paper-scissors` somewhere on your machine, and open it.
+1. Open a new **Visual Studio Code** window (**File > New Window**).
 
-1. In the **Explorer** panel, select the **New File** icon and name the file `game.py`.
+1. On the Welcome page, select **Clone Git Repository...** (or open the Command Palette with **Ctrl+Shift+P** and run **Git: Clone**).
 
-1. Make sure your Python environment is active. You should see a Python version displayed in the bottom status bar. If you see a warning, select it and choose your installed Python interpreter.
+1. Paste the following URL and press **Enter**:
 
-## Set up your starter code
+    ```
+    https://github.com/MicrosoftLearning/mslearn-python-programming.git
+    ```
 
-Before writing any logic, you'll paste a set of guiding comments into `game.py`. Because part of this program uses an `if`/`else` block, the starter code includes that structure with comment placeholders inside each branch — so you always know exactly where to add each piece of code.
+1. When the file selection dialog appears, create a new folder in a convenient location to hold the repo (for example, `mslearn-python`), select it, and click **Select as Repository Destination**.
 
-1. Copy the following code and paste it into `game.py`:
+1. After the clone completes, select **Open** to open the folder in VS Code.
+
+## Review the starter code
+
+1. In the VS Code file explorer, navigate to the `Labfiles/04-create-rock-paper-scissors-game` subfolder.
+
+1. Select the `game.py` file. 
+   
+   Because part of this program uses an `if`/`else` block, the starter code includes that structure with comment placeholders inside each branch — so you always know exactly where to add each piece of code.
 
     ```python
     import random
@@ -42,7 +52,7 @@ Before writing any logic, you'll paste a set of guiding comments into `game.py`.
     # Check if the player's choice is invalid
 
         # Display an invalid input message
-    
+
     # Play the game if the player's choice is valid
 
         # Generate the computer's choice
@@ -50,7 +60,11 @@ Before writing any logic, you'll paste a set of guiding comments into `game.py`.
         # Determine the winner
     ```
 
-    > **Note**: Be sure to maintain the correct indentation levels.
+    > **Note**: Be sure to maintain the correct indentation levels as you add code.
+
+    In the steps that follow, you'll fill in each comment with the corresponding logic.
+
+2. Make sure your Python environment is active. You should see a Python version displayed in the bottom status bar. If you see a warning, select it and choose your installed Python interpreter.
 
 ## Display the game title
 
@@ -185,7 +199,7 @@ Now you'll add the game logic inside the `else` block. You'll use `if`/`elif`/`e
     if player != "rock" and player != "paper" and player != "scissors":
         # Display an invalid input message
         print("Invalid choice. Please enter rock, paper, or scissors.")
-        
+
     # Play the game if the player's choice is valid
     else:
         # Generate the computer's choice

@@ -16,21 +16,29 @@ This exercise takes approximately **25** minutes.
 
 ## Set up your workspace
 
-You'll write and run your code in Visual Studio Code.
+You'll write and run your code in Visual Studio Code. The starter code for this exercise lives in a GitHub repository — you'll clone that repo now if you haven't already.
 
-1. Open **Visual Studio Code**.
+> **Tip**: If you've already cloned the repo during another exercise, skip to the next section.
 
-1. Select **File > Open Folder**, create a new folder called `inventory-manager` somewhere on your machine, and open it.
+1. Open a new **Visual Studio Code** window (**File > New Window**).
 
-1. In the **Explorer** panel, select the **New File** icon and name the file `inventory.py`.
+1. On the Welcome page, select **Clone Git Repository...** (or open the Command Palette with **Ctrl+Shift+P** and run **Git: Clone**).
 
-1. Make sure your Python environment is active. You should see a Python version displayed in the bottom status bar. If you see a warning, select it and choose your installed Python interpreter.
+1. Paste the following URL and press **Enter**:
 
-## Set up your starter code
+    ```
+    https://github.com/MicrosoftLearning/mslearn-python-programming.git
+    ```
 
-Before writing any logic, you'll paste a set of guiding comments into `inventory.py`. These comments act as an outline for your program — each one marks where a specific piece of code belongs.
+1. When the file selection dialog appears, create a new folder in a convenient location to hold the repo (for example, `mslearn-python`), select it, and click **Select as Repository Destination**.
 
-1. Copy the following comments and paste them into `inventory.py`:
+1. After the clone completes, select **Open** to open the folder in VS Code.
+
+## Review the starter code
+
+1. In the VS Code file explorer, navigate to the `Labfiles/06-create-inventory-manager` subfolder.
+
+1. Select the `inventory.py` file. You'll see a set of guiding comments that act as an outline for your program — each one marks where a specific piece of code belongs:
 
     ```python
     # Set up the starting inventory
@@ -42,9 +50,9 @@ Before writing any logic, you'll paste a set of guiding comments into `inventory
     # Handle the user's choice
     ```
 
-    Remember, comments are ignored by Python when the program runs. They're just there to help you organize your code.
+    Remember, comments are ignored by Python when the program runs. They're just there to help you organize your code. In the steps that follow, you'll add code beneath each comment.
 
-1. Leave the code as-is for now. In the steps that follow, you'll add code beneath each comment.
+1. Make sure your Python environment is active. You should see a Python version displayed in the bottom status bar. If you see a warning, select it and choose your installed Python interpreter.
 
 ## Set up the starting inventory
 
