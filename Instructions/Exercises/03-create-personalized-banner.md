@@ -127,16 +127,11 @@ Installing a package puts the code on your machine. To actually use it in your p
 
 ## Ask the user for their name
 
-You've done this before in earlier modules. You'll capture the name in a variable and clean up any extra spaces the user might type.
-
 1. Beneath the `# Ask the user for their name` comment, add the following lines:
 
     ```python
     name = input("What is your name? ")
-    name = name.strip()
     ```
-
-    The `.strip()` method removes any spaces at the start or end of the text.
 
 ## Turn the name into a banner
 
@@ -238,7 +233,7 @@ Errors are a normal part of programming. Learning to read them is one of the mos
 
 1. Run the program one more time to confirm everything works again.
 
-## Extend your program with GitHub Copilot
+## Display a mood banner with GitHub Copilot
 
 GitHub Copilot can help you build on top of what you already have. You'll use a comment to guide Copilot into adding a farewell banner.
 
@@ -292,7 +287,7 @@ The banner currently uses the default pyfiglet font. Ask the AI about the `font`
 
 **Center your greeting**
 
-> "In Python, how can I center a string inside a wider space when I print it?"
+> "How can I center a string inside a wider space when I print it?"
 
 Right now the `Hello, ...` line sits flush against the left margin, below a wide banner. Ask the AI about the string `.center()` method, then use it to center your greeting inside a 40-character space so it lines up more nicely.
 
