@@ -18,13 +18,13 @@ This exercise takes approximately **15** minutes.
 
 You'll write and run your code using an online Python editor — no installation required.
 
-1. Open a browser and navigate to the Python editor at [https://buzahid.github.io/python-coder/app/](https://buzahid.github.io/python-coder/app/).
+1. Open a browser and navigate to the Python editor at [https://microsoftlearning.github.io/python-coder](https://microsoftlearning.github.io/python-coder/).
 
-1. You'll see two panels:
+2. You'll see two panels:
     - **Editor pane** (left): where you write your Python code.
     - **Output terminal** (right): where output is displayed and where you can type input when the program asks for it.
 
-1. The editor may contain some default code. Select all of it and delete it so you're starting with a clean, empty file.
+3. The editor may contain some default code. Select all of it and delete it so you're starting with a clean, empty file.
 
 ## Set up your program
 

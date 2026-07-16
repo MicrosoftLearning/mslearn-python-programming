@@ -16,7 +16,7 @@ This exercise takes approximately **20** minutes.
 
 ## Open the online Python IDE
 
-1. Open a browser and navigate to the Python editor at [https://buzahid.github.io/python-coder/app/](https://buzahid.github.io/python-coder/app/).
+1. Open a browser and navigate to the Python editor at [https://microsoftlearning.github.io/python-coder](https://microsoftlearning.github.io/python-coder/).
 
 1. You'll see two panels:
     - **Editor pane** (left): where you write your Python code.
