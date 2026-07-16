@@ -41,11 +41,14 @@ You'll write and run your code in Visual Studio Code. The starter code for this 
 1. Select the `game.py` file. You'll see a set of guiding comments that act as an outline for your program — each one marks where a specific piece of code belongs:
 
     ```python
+    # Add dependencies
+
+
     # Set up the game
 
     # Ask the player to guess
 
-    # Check the guess and give feedback
+        # Check the guess and give feedback
 
     # Announce the result
     ```
@@ -58,11 +61,16 @@ You'll write and run your code in Visual Studio Code. The starter code for this 
 
 Every guessing game needs a target. You'll use Python's built-in `random` module to pick a random whole number between 1 and 20.
 
-1. Beneath the `# Set up the game` comment, add the following lines:
+1. Under the `# Add dependencies` comment, add the following line:
 
     ```python
     import random
+    ```
 
+
+1. Beneath the `# Set up the game` comment, add the following lines:
+
+    ```python
     secret_number = random.randint(1, 20)
     max_guesses = 5
     guess_count = 0
@@ -89,30 +97,29 @@ Every guessing game needs a target. You'll use Python's built-in `random` module
 
 ## Ask the player to guess
 
-Next, you'll add a `while` loop that keeps prompting the player until they either run out of guesses or get the answer right. Just like scores in the previous exercise, the player's input comes in as a string, so you convert it to an integer.
+Next, you'll add a `while` loop that keeps prompting the player until they either run out of guesses or get the answer right. The player's input comes in as a string, so you convert it to an integer.
 
 1. Beneath the `# Ask the player to guess` comment, add the following lines:
 
     ```python
     while guess_count < max_guesses:
         guess_count += 1
-        guess = int(input(f"\nGuess {guess_count}: "))
+        guess = int(input(f"\nGuess #{guess_count}: "))
     ```
 
     - `while guess_count < max_guesses:` keeps the loop running until the player has used all their guesses.
     - `guess_count += 1` bumps the count each time through the loop — this is what eventually causes the condition to become `False`.
     - `int(input(...))` reads the player's input and converts it to a whole number in one step.
 
-    > **Note**: The lines beneath the `while` statement must be indented. Python uses indentation to know which lines are part of the loop.
-
 ## Check the guess and give feedback
 
 Now the loop needs to compare the guess to the secret number and tell the player whether they were too high, too low, or exactly right. When they guess right, you use `break` to exit the loop early.
 
-1. Beneath the `guess = int(...)` line, add the following code. Keep the same indentation so it stays inside the `while` loop:
+Be sure to maintain the correct indentation levels as you add code beneath the `while` loop.
+
+1. Beneath the `# Check the guess and give feedback` comment, add the following lines:
 
     ```python
-        # Check the guess and give feedback
         if guess == secret_number:
             print(f"Correct! You got it in {guess_count} guesses.")
             break
@@ -122,9 +129,7 @@ Now the loop needs to compare the guess to the secret number and tell the player
             print("Too high.")
     ```
 
-    Move the `# Check the guess and give feedback` comment from the top of the file down into the loop (as shown above) — that's where the code actually lives.
-
-1. Run the program. Type a guess after each prompt and press **Enter**. You should see something like:
+2. Run the program. Type a guess after each prompt and press **Enter**. You should see something like:
 
     ```output
     I'm thinking of a number between 1 and 20.
@@ -144,21 +149,22 @@ Now the loop needs to compare the guess to the secret number and tell the player
 
 Right now, if the player runs out of guesses, the program just ends silently. You'll add a final message after the loop to reveal the secret number when the player loses.
 
-1. Beneath the `# Announce the result` comment (which should be back at the bottom of your program, **not** indented inside the loop), add the following:
+1. Beneath the `# Announce the result` comment, add the following:
 
     ```python
     else:
         print(f"\nOut of guesses! The number was {secret_number}.")
     ```
 
-    Python's `while` loop supports an `else` block that runs **only if the loop finished naturally** (without hitting `break`). It's a perfect fit for handling the "you lost" case.
+    Python's `while` loop supports an `else` block that runs **only if the loop finished naturally** (without hitting `break`). It's a perfect fit for handling the "you lost" case so the player sees the secret number.
 
-1. Your complete program should now look like this:
+2. Your complete program should now look like this:
 
     ```python
-    # Set up the game
+    #  Add dependencies
     import random
 
+    # Set up the game
     secret_number = random.randint(1, 20)
     max_guesses = 5
     guess_count = 0
@@ -169,7 +175,7 @@ Right now, if the player runs out of guesses, the program just ends silently. Yo
     # Ask the player to guess
     while guess_count < max_guesses:
         guess_count += 1
-        guess = int(input(f"\nGuess {guess_count}: "))
+        guess = int(input(f"\nGuess #{guess_count}: "))
 
         # Check the guess and give feedback
         if guess == secret_number:
@@ -185,7 +191,7 @@ Right now, if the player runs out of guesses, the program just ends silently. Yo
         print(f"\nOut of guesses! The number was {secret_number}.")
     ```
 
-1. Run the program a few times. Try guessing correctly on your first try, and also try running out of guesses on purpose to see the losing message.
+3. Run the program a few times. Try guessing correctly on your first try, and also try running out of guesses on purpose to see the losing message.
 
 ## Extend with GitHub Copilot
 
@@ -193,18 +199,18 @@ Now that the game is working, use GitHub Copilot to extend it. Open the Copilot 
 
 **Handle invalid input safely**
 
-> "In Python, what happens if I use `int(input())` and the user types letters instead of a number? How can I handle that safely as a beginner?"
+> "What happens if I use `int(input())` and the user types letters instead of a number? How can I handle that safely as a beginner?"
 
 Right now, if the player types anything that isn't a whole number, the program crashes. Ask the AI to show you how to keep prompting until the player enters a valid number, then apply the pattern to your `guess = int(input(...))` line.
 
 **Remember previous guesses**
 
-> "In Python, how can I remember which values a user has already entered so I can warn them if they repeat one?"
+> "How can I remember which values a user has already entered so I can warn them if they repeat one?"
 
 The current game doesn't stop the player from wasting a guess on a number they already tried. Ask the AI how to track past guesses and use its answer to add a warning that doesn't count repeat guesses against them.
 
 **Give warmer hints**
 
-> "In Python, how can I check whether a number is close to another number? Can you show me an example using `abs()`?"
+> "How can I check whether a number is close to another number? Can you show me an example using `abs()`?"
 
 Currently the game only says "too high" or "too low." Ask the AI how to use `abs()` to detect when a guess is within 2 of the answer, and add a "very close" hint to your feedback logic.

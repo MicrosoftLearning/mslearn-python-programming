@@ -10,7 +10,7 @@ lab:
 
 # Build a to-do list
 
-In this exercise, you build a to-do list app that remembers your tasks between runs. You practice opening files safely with the `with` statement, **reading** tasks from a file, and **writing** or **appending** new tasks back to disk.
+In this exercise, you build a to-do list app that remembers your tasks between runs. Some of the code—the menu, the main loop, and the branches that respond to each choice—is already provided for you. In this exercise, you fill in the code that reads tasks from a file and appends new tasks back to disk.
 
 This exercise takes approximately **25** minutes.
 
@@ -38,40 +38,98 @@ You'll write and run your code in Visual Studio Code. The starter code for this 
 
 1. In the VS Code file explorer, navigate to the `Labfiles/07-build-a-todo-list` subfolder.
 
-1. Select the `todo.py` file. You'll see a set of guiding comments that act as an outline for your program — each one marks where a specific piece of code belongs:
+1. Select the `todo.py` file. Some of the program is already provided—a `while` loop, a menu, and `if`/`elif`/`else` branches that respond to each choice. Four comments mark the places where you'll add code:
 
     ```python
-    # Configure the file
+    # Create a loop that displays a menu and responds to user input
+    while True:
+        # Display the menu
+        print("\n=== Personal To-Do List ===")
+        print("1. View tasks")
+        print("2. Add a task")
+        print("3. Exit")
+        
+        # Get the user's choice
+        choice = input("Choose an option (1-3): ")
+        
+        if choice == "1":
+            print("\n--- Current Tasks ---")
 
-    # Load existing tasks
+            # Open the file in Read mode and read the tasks into a list
 
-    # Show the menu
+                
+            # Display the tasks
 
-    # Run the main program loop
+                
+        elif choice == "2":
+            new_task = input("\nWhat do you need to do? ")
 
-    # Save tasks back to the file
+            # Open the file in Append mode to add to the end of the list
+
+                
+            print("Task saved!")
+            
+        elif choice == "3":
+            # Exit the program
+            print("\nGoodbye! Stay productive.")
+            break 
+            
+        else:
+            # Handle invalid input
+            print("\nInvalid choice. Please choose 1, 2, or 3.")
     ```
 
-    Remember, comments are ignored by Python when the program runs. They're just there to help you organize your code. In the steps that follow, you'll add code beneath each comment.
+    Remember, comments are ignored by Python when the program runs. They're only there to guide you. In the steps that follow, you'll add code beneath each comment.
 
 1. Make sure your Python environment is active. You should see a Python version displayed in the bottom status bar. If you see a warning, select it and choose your installed Python interpreter.
 
-## Configure the file and create it if it doesn't exist
+## Open the file and read the tasks
 
-Every read or write operation needs a file to point at. You'll store the file name in a variable so you can reuse it. Then you'll open the file in **append mode** — this creates the file if it doesn't already exist, without erasing anything if it does.
+When the user chooses `1`, you need to open the file that stores your tasks and load its contents into a list you can loop through. You'll use the `with` statement, which opens the file and automatically closes it when you're done.
 
-1. Beneath the `# Configure the file` comment, add the following lines:
+1. Beneath the `# Open the file in Read mode and read the tasks into a list` comment, add the following lines:
 
     ```python
-    tasks_file = "tasks.txt"
-
-    # Make sure the file exists so the first read doesn't fail
-    with open(tasks_file, "a"):
-        pass
+            with open("tasks.txt", "r") as file:
+                tasks = file.readlines()
     ```
 
-    - `tasks_file` holds the file name so you don't have to type it every time.
-    - Opening in `"a"` (append) mode creates the file if it's missing. `pass` is a placeholder that does nothing — you're only opening the file to make sure it exists.
+    - `open("tasks.txt", "r")` opens a file called `tasks.txt` in **read mode** (`"r"`).
+    - `as file` gives the open file a name you can use inside the `with` block.
+    - `file.readlines()` returns a list where each item is one line from the file — perfect for a to-do list.
+
+## Display the tasks
+
+Now that `tasks` is a list of strings, you can loop through it and print each one. When a line is read from a file, it comes with a `\n` newline character at the end—you'll strip that off so the output looks clean.
+
+1. Beneath the `# Display the tasks` comment, add the following lines:
+
+    ```python
+            for task in tasks:
+                print("- " + task.strip())
+    ```
+
+    - `for task in tasks:` loops through each item in the list.
+    - `task.strip()` removes whitespace (including the trailing newline) from the start and end of the string.
+    - Concatenating `"- "` with the task turns each line into a bulleted item.
+
+## Save a new task to the file
+
+When the user chooses `2`, they'll type a task and it needs to be saved. You'll open the same file in **append mode** (`"a"`), which adds new content to the end without erasing what's already there. As a bonus, append mode also **creates the file** if it doesn't exist yet — so you don't need any special setup on the first run.
+
+1. Beneath the `# Open the file in Append mode to add to the end of the list` comment, add the following lines:
+
+    ```python
+            with open("tasks.txt", "a") as file:
+                file.write(new_task + "\n")
+    ```
+
+    - `"a"` mode opens the file for **appending**. Existing tasks are preserved.
+    - `file.write()` doesn't add a newline for you the way `print()` does — that's why you concatenate `"\n"` yourself. Without it, every new task would be squashed onto the same line.
+
+## Test your program
+
+Your program is complete. Time to try it out.
 
 1. Select the **▶ Run Python File** button in the top-right corner of the editor, or open the terminal (**Terminal > New Terminal**) and run:
 
@@ -79,196 +137,34 @@ Every read or write operation needs a file to point at. You'll store the file na
     python todo.py
     ```
 
-    The program should run without errors. You won't see output yet.
+1. Choose `2` and add a task like `Buy groceries`. Add one or two more tasks the same way.
 
-## Load existing tasks into a list
-
-To work with the tasks in memory, you'll read them out of the file and into a **list** of strings. Reading and writing files works with strings, so each task becomes one line in the file.
-
-1. Beneath the `# Load existing tasks` comment, add the following lines:
-
-    ```python
-    with open(tasks_file, "r") as file:
-        tasks = [line.strip() for line in file]
-
-    print(f"Loaded {len(tasks)} task(s) from {tasks_file}.")
-    ```
-
-    - `open(tasks_file, "r")` opens the file for **reading**.
-    - Iterating over `file` gives you one line at a time. `line.strip()` removes the trailing newline character so the tasks stored in the list are clean.
-    - `[... for line in file]` is a **list comprehension** — a compact way to build a list. You'll learn more about them later, but for now, read it as: "for every line in the file, add `line.strip()` to the list."
-
-1. Run the program. Since the file is brand new and empty, you should see:
+1. Choose `1` to view your tasks. You should see them listed, for example:
 
     ```output
-    Loaded 0 task(s) from tasks.txt.
+    --- Current Tasks ---
+    - Buy groceries
+    - Walk the dog
+    - Finish Python exercise
     ```
 
-## Show the menu
+1. Choose `3` to exit. Then run the program again and choose `1`. Your tasks are still there — because they were saved to `tasks.txt`, they persist between runs.
 
-You'll give the user four choices: view tasks, add a task, remove a task, or quit. Storing the options in a list makes them easy to display and validate.
-
-1. Beneath the `# Show the menu` comment, add the following lines:
-
-    ```python
-    menu_options = ["view", "add", "remove", "quit"]
-    ```
-
-    You'll display the menu inside the main loop next, so it reappears after every action.
-
-## Run the main program loop
-
-Now you'll wire everything into a `while` loop so the user can keep working with their tasks until they choose to quit.
-
-1. Beneath the `# Run the main program loop` comment, add the following lines:
-
-    ```python
-    while True:
-        print("\nWhat would you like to do?")
-        for option in menu_options:
-            print(f"  - {option}")
-
-        choice = input("\nEnter a choice: ").lower()
-
-        if choice not in menu_options:
-            print("That's not a valid option. Try again.")
-            continue
-
-        if choice == "quit":
-            break
-
-        elif choice == "view":
-            if not tasks:
-                print("You have no tasks yet.")
-            else:
-                print("\n--- Your tasks ---")
-                for i, task in enumerate(tasks, start=1):
-                    print(f"  {i}. {task}")
-
-        elif choice == "add":
-            new_task = input("What do you need to do? ")
-            tasks.append(new_task)
-            print(f"Added: {new_task}")
-
-        elif choice == "remove":
-            number = int(input("Which task number should I remove? "))
-            if 1 <= number <= len(tasks):
-                removed = tasks.pop(number - 1)
-                print(f"Removed: {removed}")
-            else:
-                print("That task number doesn't exist.")
-    ```
-
-    - `enumerate(tasks, start=1)` gives you each task along with a 1-based number, which is friendlier for the user than 0-based indexes.
-    - `tasks.pop(number - 1)` removes the task at that position and returns it, so you can display what was removed.
-
-1. Run the program. Try adding two or three tasks, viewing the list, and removing one. Everything works — but if you quit and rerun the program, your tasks are gone. You'll fix that in the next section.
-
-## Save tasks back to the file
-
-To make the tasks persist between runs, you need to write them back to the file after the loop ends. You'll use **write mode** (`"w"`) so the file is rewritten fresh each time — that way removed tasks actually disappear.
-
-1. Beneath the `# Save tasks back to the file` comment (at the very end of your program, **outside** the `while` loop), add the following:
-
-    ```python
-    with open(tasks_file, "w") as file:
-        for task in tasks:
-            file.write(task + "\n")
-
-    print(f"Saved {len(tasks)} task(s) to {tasks_file}. Goodbye!")
-    ```
-
-    - `open(tasks_file, "w")` opens the file for **writing** and erases what's there.
-    - `.write(task + "\n")` writes each task on its own line. Unlike `print()`, `.write()` doesn't add newlines for you.
-
-1. Your complete program should now look like this:
-
-    ```python
-    # Configure the file
-    tasks_file = "tasks.txt"
-
-    with open(tasks_file, "a"):
-        pass
-
-    # Load existing tasks
-    with open(tasks_file, "r") as file:
-        tasks = [line.strip() for line in file]
-
-    print(f"Loaded {len(tasks)} task(s) from {tasks_file}.")
-
-    # Show the menu
-    menu_options = ["view", "add", "remove", "quit"]
-
-    # Run the main program loop
-    while True:
-        print("\nWhat would you like to do?")
-        for option in menu_options:
-            print(f"  - {option}")
-
-        choice = input("\nEnter a choice: ").lower()
-
-        if choice not in menu_options:
-            print("That's not a valid option. Try again.")
-            continue
-
-        if choice == "quit":
-            break
-
-        elif choice == "view":
-            if not tasks:
-                print("You have no tasks yet.")
-            else:
-                print("\n--- Your tasks ---")
-                for i, task in enumerate(tasks, start=1):
-                    print(f"  {i}. {task}")
-
-        elif choice == "add":
-            new_task = input("What do you need to do? ")
-            tasks.append(new_task)
-            print(f"Added: {new_task}")
-
-        elif choice == "remove":
-            number = int(input("Which task number should I remove? "))
-            if 1 <= number <= len(tasks):
-                removed = tasks.pop(number - 1)
-                print(f"Removed: {removed}")
-            else:
-                print("That task number doesn't exist.")
-
-    # Save tasks back to the file
-    with open(tasks_file, "w") as file:
-        for task in tasks:
-            file.write(task + "\n")
-
-    print(f"Saved {len(tasks)} task(s) to {tasks_file}. Goodbye!")
-    ```
-
-1. Run the program. Add a few tasks and then choose `quit`. Now run the program again — you should see something like:
-
-    ```output
-    Loaded 3 task(s) from tasks.txt.
-    ```
-
-    Your tasks were saved to disk, loaded on startup, and are ready to work with again.
+    > **Tip**: Look for a new file called `tasks.txt` in the `07-build-a-todo-list` folder. Open it — each line is one task, exactly as you'd expect.
 
 ## Extend with GitHub Copilot
 
 Now that the to-do list is working, use GitHub Copilot to extend it. Open the Copilot Chat panel in VS Code (**Ctrl+Alt+I**) and try the following prompts.
 
-**Save tasks as they're added**
+**Number the tasks when viewing them**
 
-> "In Python, what's the difference between opening a file in `\"w\"` mode versus `\"a\"` mode?"
+> "How can I number the tasks when I loop through the list?"
 
-The current program only saves tasks when the user quits — if it crashes first, unsaved tasks are lost. Ask the AI about append mode, then change the `add` option so it writes each new task to the file the moment it's added.
+The current view prints each task with a dash. Ask Copilot about `enumerate()`, then update the display so tasks appear as `1. Buy groceries` instead of `- Buy groceries`. This makes the list easier to read and will help when you add the next feature.
 
-**Handle a missing file gracefully**
 
-> "In Python, how do I handle the error that happens when I try to open a file that doesn't exist?"
+**Add a "Remove a task" option**
 
-Your program uses an "open in append mode" trick to make sure the file exists before reading it. Ask the AI about `try` / `except FileNotFoundError`, then use its answer to replace that trick with a cleaner pattern that starts with an empty list on the very first run.
+> "Add a fourth option to the menu that allows the user to remove a task by number. The program should read the tasks from the file, display them with numbers, ask the user which task to remove, and then write the updated list back to the file."
 
-**Mark tasks as complete**
-
-> "In Python, how can I mark items in a list as done without removing them?"
-
-Right now the only way to clear a task is to delete it. Ask the AI for beginner-friendly ways to mark items as done, then add a `"done"` menu option that flags tasks (for example, by prefixing them with `[x]`) instead of removing them. Don't forget to add `"done"` to `menu_options`.
+This prompt provides Copilot with specific instructions for the new feature. You can also ask Copilot to help you with smaller pieces of code, like reading from a file, writing to a file, or displaying a numbered list. When Copilot completes the prompt, try running the program and removing a task. 

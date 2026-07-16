@@ -157,7 +157,7 @@ Now you'll wire everything together with a `while` loop that reads the user's ch
 
 The last piece is picking the right function based on the user's choice, calling it, and displaying the result. This is where the value returned from each function actually gets used.
 
-1. Beneath the `# Perform the calculation` comment (still inside the `while` loop, at the same indentation as the `a = float(...)` line), add:
+1. Beneath the `# Perform the calculation` comment, add:
 
     ```python
         if choice == "add":
@@ -175,10 +175,12 @@ The last piece is picking the right function based on the user's choice, calling
             print(f"Result: {result}")
     ```
 
+    Be sure to indent this block so it's inside the `while` loop.
+
     - Each `elif` calls a different function and stores its return value in `result`.
     - `if result is None:` handles the divide-by-zero case cleanly — a nice benefit of returning `None` instead of crashing.
 
-1. Your complete program should now look like this:
+2. Your complete program should now look like this:
 
     ```python
     # Define the calculator functions
@@ -234,7 +236,7 @@ The last piece is picking the right function based on the user's choice, calling
             print(f"Result: {result}")
     ```
 
-1. Run the program. Try each operation:
+3. Run the program. Try each operation:
 
     ```output
     What would you like to do?
@@ -258,18 +260,18 @@ Now that the calculator is working, use GitHub Copilot to extend it. Open the Co
 
 **Add a default parameter**
 
-> "In Python, how do I give a function parameter a default value?"
+> "Create a power function that takes two parameters, `base` and `exponent`, and returns the base raised to the exponent. Make the exponent default to 2 if not provided."
 
-Ask the AI for a beginner-friendly example, then add a `power` function that raises `a` to the power of `b`, defaulting to `2` so it acts as a "square" when only one number is passed. Don't forget to add `"power"` to `menu_options` and a matching `elif` branch in the main loop.
+This prompt demonstrates how to define a function with a **default parameter**. Notice the syntax for setting a default value in the function definition. You can then add this new operation to the menu and test it.
 
 **Return more than one value**
 
-> "In Python, how can I return more than one value from a function?"
+> "Update the divide function to return both the quotient and the remainder when dividing two integers."
 
-Ask the AI to show you how a single function can return multiple values, then update `divide` so it returns both the quotient and the remainder. Update the main loop to unpack both values and display them together.
+This prompt demonstrates how to return multiple values from a function. Notice the syntax for returning a tuple and how to unpack it when calling the function. You can then update the main loop to handle and display both results.
 
-**Explore variable scope**
+**Use a dictionary to map operations to functions**
 
-> "In Python, what happens if I use a variable name inside a function that also exists outside the function? Can you show me a beginner-friendly example of local vs. global variables?"
+> "Refactor the calculator to use a dictionary that maps operation names to their corresponding functions, instead of using if/elif statements."
 
-Ask the AI to explain local vs. global variables. Try creating a variable named `a` at the top of your program and see whether it affects the `add(a, b)` function — the answer might surprise you.
+This is a more advanced prompt that shows how to use a **dictionary** to simplify the code. Instead of multiple `if/elif` statements, you can look up the function in the dictionary and call it directly. This makes the code cleaner and easier to extend with new operations.
