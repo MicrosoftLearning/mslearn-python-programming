@@ -18,7 +18,7 @@ This exercise takes approximately **15** minutes.
 
 You'll write and run your code using an online Python editor — no installation required.
 
-1. Open a browser and navigate to the Python editor at [https://microsoftlearning.github.io/python-coder](https://microsoftlearning.github.io/python-coder/).
+1. Open a browser and navigate to the Python editor at [https://aka.ms/python-coder](https://aka.ms/python-coder).
 
 2. You'll see two panels:
     - **Editor pane** (left): where you write your Python code.
