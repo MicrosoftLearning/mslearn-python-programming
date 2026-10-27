@@ -1,58 +1,50 @@
 ---
 lab:
-    title: 'Build a sales report generator with error handling'
-    description: 'Create a Python program that reads sales data from a CSV file, handles errors gracefully, calculates statistics, and generates a formatted report.'
+    title: 'Refactor a sales report generator to code defensively'
+    description: 'Improve a Python sales report program so that it is readable, documented, handles bad data, and is covered by unit tests.'
     level: 200
-    duration: 35
+    duration: 40
     islab: true
     status: 'released'
 ---
 
-# Build a sales report generator with error handling
+# Refactor a sales report generator to code defensively
 
-In this exercise, you build a sales report generator that reads sales data from a CSV file, handles errors gracefully, and prints a formatted report. You practice reading files, catching errors with `try` and `except`, and organizing your code into **functions**.
+A teammate wrote a program that reads sales data from a CSV file and prints a report. It works on clean data, but it crashes on real data. In this exercise, you refactor the program so that it's readable, handles bad data, is documented, and has unit tests. Then you use GitHub Copilot to find and fix a gap you missed.
 
-This exercise takes approximately **35** minutes.
+This exercise takes approximately **40** minutes.
 
 ## Set up your workspace
 
-You'll write and run your code in Visual Studio Code. The starter code for this exercise lives in a GitHub repository — you'll clone that repo now if you haven't already.
+You write and run your code in Visual Studio Code. The starter code is in a GitHub repository.
 
-> **Tip**: If you've already cloned the repo during another exercise, skip to the next section.
+> **Tip**: If you already cloned the repository in another exercise, skip to the next section.
 
 1. Open a new **Visual Studio Code** window (**File > New Window**).
 
-1. On the Welcome page, select **Clone Git Repository...** (or open the Command Palette with **Ctrl+Shift+P** and run **Git: Clone**).
+1. On the Welcome page, select **Clone Git Repository...**, or open the Command Palette (**Ctrl+Shift+P**) and run **Git: Clone**.
 
-1. Paste the following URL and press **Enter**:
+1. Enter the following URL and press **Enter**:
 
     ```
     https://github.com/MicrosoftLearning/mslearn-python-programming.git
     ```
 
-1. When the file selection dialog appears, create a new folder in a convenient location to hold the repo (for example, `mslearn-python`), select it, and click **Select as Repository Destination**.
+1. Create a folder for the repository, such as `mslearn-python`, and select **Select as Repository Destination**.
 
-1. After the clone completes, select **Open** to open the folder in VS Code.
+1. When the clone completes, select **Open**.
 
-## Review the starter code
+## Review and run the starter code
 
-1. In the VS Code file explorer, navigate to the `Labfiles/09-sales-report-generator` subfolder.
+1. In the Explorer pane, open the `Labfiles/09-sales-report-generator` folder. It contains three files:
 
-1. Select the `sales_report.py` file. You'll see a set of guiding comments that act as an outline for your program — each one marks where a specific piece of code belongs:
+    | File | Purpose |
+    |---|---|
+    | `sales_report.py` | The program you refactor. |
+    | `sales.csv` | The sales data. |
+    | `test_sales_report.py` | Unit tests that you extend. |
 
-    ```python
-    # Read sales data from CSV file
-
-    # Calculate statistics
-
-    # Display report
-
-    # Main program flow
-    ```
-
-    Remember, comments are ignored by Python when the program runs. They're just there to help you organize your code. In the steps that follow, you'll add code beneath each comment.
-
-1. Select the `sales.csv` file. It contains a header row followed by sample sales records:
+1. Open `sales.csv`. Some rows are intentionally bad:
 
     ```text
     Date,Product,Amount
@@ -62,288 +54,80 @@ You'll write and run your code in Visual Studio Code. The starter code for this 
     2024-01-16,Widget A,1200.00
     2024-01-16,Widget B
     2024-01-17,Widget C,450.00
+    2024-01-17,Widget A,-50.00
     ```
 
-    Some of the records are intentionally bad: line 4 has `INVALID` instead of an amount, and line 6 is missing its amount. Real-world data is often messy like this, so your program needs to handle it without crashing.
+    Line 4 has a non-numeric amount, line 6 has no amount, and line 8 has a negative amount.
 
-1. Make sure your Python environment is active. You should see a Python version displayed in the bottom status bar. If you see a warning, select it and choose your installed Python interpreter.
+1. Open `sales_report.py` and review the code:
 
-1. Open a terminal (**Terminal > New Terminal**) and change to the exercise folder so your program can find `sales.csv`:
+    | Function | Purpose |
+    |---|---|
+    | `parse_sales_row` | Reads the amount from one row. It already validates the row and raises `ValueError` for bad data. |
+    | `rd` | Reads the file and returns a list of amounts. |
+    | `avg` | Calculates the average of the amounts. |
+    | `display_sales_report` | Prints the report. |
+
+    The `if __name__ == "__main__":` block at the bottom runs the program. It runs only when you run the file directly, so your tests can import the functions without printing a report.
+
+1. Open a terminal (**Terminal > New Terminal**), change to the exercise folder, and run the program:
 
     ```bash
     cd Labfiles/09-sales-report-generator
-    ```
-
-    You'll run your program from this terminal throughout the exercise.
-
-## Handle a missing file
-
-A report generator is only useful if it can read its data. You'll start with a function that opens the file and reads the amount from each row. First, you'll make sure the program doesn't crash if the file doesn't exist.
-
-1. Beneath the `# Read sales data from CSV file` comment, add the following:
-
-    ```python
-    def read_sales_data(filename):
-        sales_amounts = []
-        try:
-            with open(filename, "r") as file:
-                next(file)  # Skip the header row
-                for line in file:
-                    columns = line.strip().split(",")
-                    amount = float(columns[2])
-                    sales_amounts.append(amount)
-        except FileNotFoundError:
-            print(f"Error: File '{filename}' not found")
-
-        return sales_amounts
-    ```
-
-    - `with open()` opens the file and closes it automatically when the block ends.
-    - `next(file)` skips the header row (`Date,Product,Amount`).
-    - `line.strip().split(",")` turns a line of text into a list of columns. The amount is in the third column, at index `2`.
-    - `float()` converts the amount from text to a number.
-    - `except FileNotFoundError` catches the error when the file is missing and prints a friendly message instead of crashing.
-
-1. Temporarily add the following line at the bottom of your program to test the function with a file that doesn't exist:
-
-    ```python
-    print(read_sales_data("missing.csv"))
-    ```
-
-1. Run the program from the terminal:
-
-    ```bash
     python sales_report.py
     ```
 
-    You should see:
-
-    ```output
-    Error: File 'missing.csv' not found
-    []
-    ```
-
-1. Now change the test line to use the real data file, and run the program again:
-
-    ```python
-    print(read_sales_data("sales.csv"))
-    ```
-
-    This time the program crashes with an error that ends like this:
+    The program crashes. The last line of the error is:
 
     ```output
     ValueError: could not convert string to float: 'INVALID'
     ```
 
-    `float()` can't convert the word `INVALID` into a number. You'll fix that next.
+    `parse_sales_row` correctly rejected the bad row, but nothing handles the exception, so the program stops. In the next sections, you fix this and the other weaknesses in the code.
 
-## Skip bad data instead of crashing
+## Make the code readable
 
-You'll handle the bad records by catching the `ValueError` for each row, reporting the problem, and moving on to the next row. You'll also check that each row has enough columns.
+The names `rd` and `avg` don't describe what the functions do. You rename them with VS Code, which updates every place the names are used.
 
-1. Replace the `read_sales_data` function with the following version:
+1. Beneath the `# Read sales data from CSV file` comment, right-click `rd` in the `def` line and select **Rename Symbol**, or select `rd` and press **F2**. Enter `read_sales_data` and press **Enter**.
 
-    ```python
-    def read_sales_data(filename):
-        sales_amounts = []
-        try:
-            with open(filename, "r") as file:
-                next(file)  # Skip the header row
-                for line_num, line in enumerate(file, start=2):
-                    columns = line.strip().split(",")
-                    if len(columns) < 3:
-                        print(f"Line {line_num}: Missing data - skipped")
-                        continue
-                    try:
-                        sales_amounts.append(float(columns[2]))
-                    except ValueError:
-                        print(f"Line {line_num}: Invalid amount - skipped")
-        except FileNotFoundError:
-            print(f"Error: File '{filename}' not found")
+1. Beneath the `# Calculate statistics` comment, rename `avg` to `calculate_average` the same way.
 
-        return sales_amounts
-    ```
+1. Check that the calls in `display_sales_report` and in the `# Main program flow` block changed too. Run the program again. You get the same `ValueError` as before.
 
-    - `enumerate(file, start=2)` numbers each line. It starts at `2` because the header was line `1`.
-    - `len(columns) < 3` catches rows that are missing the amount column. `continue` skips to the next row.
-    - The inner `try` / `except ValueError` catches amounts that can't be converted to a number.
-    - Bad records are reported and skipped, not fatal.
+    Renaming changes how the code reads, not how it behaves.
 
-1. Run the program. You should see:
+## Handle errors
 
-    ```output
-    Line 4: Invalid amount - skipped
-    Line 6: Missing data - skipped
-    [1500.0, 2100.0, 1200.0, 450.0]
-    ```
+The program has three weaknesses: one bad row stops the whole report, a missing file crashes the program, and an empty list of sales causes a confusing error. In this section, you address each of these issues.
 
-1. Delete the temporary `print(read_sales_data("sales.csv"))` line.
+### Skip bad rows
 
-## Calculate the statistics
+A single bad row shouldn't stop the whole report. `parse_sales_row` already raises a `ValueError` for a bad row. You catch that exception in the loop so the program reports the problem and moves on to the next row.
 
-Next, you'll add four small functions that each calculate one statistic. Each function takes the list of sales amounts and **returns** a value.
+> **Tip**: As you add code, be sure to maintain the correct indentation. Use the existing comments as a guide, entering the new code at the same level of indentation.
 
-1. Beneath the `# Calculate statistics` comment, add the following:
+1. Beneath the `# Skip a row that parse_sales_row rejects and print its line number` comment, update the code to the following:
 
     ```python
-    def calculate_total(sales_amounts):
-        return sum(sales_amounts)
-
-    def calculate_average(sales_amounts):
-        if len(sales_amounts) == 0:
-            return 0
-        return calculate_total(sales_amounts) / len(sales_amounts)
-
-    def find_highest_sale(sales_amounts):
-        if len(sales_amounts) == 0:
-            return 0
-        return max(sales_amounts)
-
-    def find_lowest_sale(sales_amounts):
-        if len(sales_amounts) == 0:
-            return 0
-        return min(sales_amounts)
+    try:
+        sales_amounts.append(parse_sales_row(line))
+    except ValueError as error:
+        print(f"Line {line_number}: {error} - skipped")
     ```
 
-    - Each function does one job, which keeps the code easy to read and test.
-    - `calculate_average`, `find_highest_sale`, and `find_lowest_sale` check for an empty list first. Dividing by zero, or calling `max()` or `min()` on an empty list, would otherwise raise an error.
-    - `calculate_average` reuses `calculate_total` instead of repeating the calculation.
+    - The `append` line moves inside the `try` block, so a row is added to the list only if `parse_sales_row` accepts it.
+    - `except ValueError as error` runs when `parse_sales_row` raises an exception. The variable `error` holds the message.
+    - The loop already numbers each row with `enumerate(file, start=2)`. The count starts at `2` because the header is line 1. You use `line_number` to tell the user which row was skipped.
 
-## Display the report
-
-Now you'll write a function that uses your calculation functions and prints the results in a neatly formatted report.
-
-1. Beneath the `# Display report` comment, add the following:
-
-    ```python
-    def display_sales_report(sales_amounts):
-        print("Sales Report:")
-        print("=" * 40)
-
-        if len(sales_amounts) == 0:
-            print("No valid sales data found.")
-            return
-
-        total = calculate_total(sales_amounts)
-        average = calculate_average(sales_amounts)
-        highest = find_highest_sale(sales_amounts)
-        lowest = find_lowest_sale(sales_amounts)
-
-        print(f"Total Sales:        ${total:,.2f}")
-        print(f"Average Sale:       ${average:,.2f}")
-        print(f"Highest Sale:       ${highest:,.2f}")
-        print(f"Lowest Sale:        ${lowest:,.2f}")
-        print(f"Number of Sales:    {len(sales_amounts)}")
-        print("=" * 40)
-    ```
-
-    - `"=" * 40` repeats the `=` character 40 times to draw a divider line.
-    - `:,.2f` formats a number with thousands separators and two decimal places (for example, `5250.0` becomes `5,250.00`).
-    - If there's no valid data, the function prints a message and returns early instead of showing a report full of zeros.
-
-## Add the main program
-
-The last piece ties everything together: read the data, then display the report.
-
-1. Beneath the `# Main program flow` comment, add the following:
-
-    ```python
-    if __name__ == "__main__":
-        filename = "sales.csv"
-        print(f"Reading sales from {filename}...")
-        sales_amounts = read_sales_data(filename)
-        display_sales_report(sales_amounts)
-    ```
-
-    - `if __name__ == "__main__":` makes this code run only when you run the file directly. If another program imports your functions, this block is skipped.
-    - The report is built from the list returned by `read_sales_data`, so the data flows from one function to the next.
-
-1. Your complete program should now look like this:
-
-    ```python
-    # Read sales data from CSV file
-    def read_sales_data(filename):
-        sales_amounts = []
-        try:
-            with open(filename, "r") as file:
-                next(file)  # Skip the header row
-                for line_num, line in enumerate(file, start=2):
-                    columns = line.strip().split(",")
-                    if len(columns) < 3:
-                        print(f"Line {line_num}: Missing data - skipped")
-                        continue
-                    try:
-                        sales_amounts.append(float(columns[2]))
-                    except ValueError:
-                        print(f"Line {line_num}: Invalid amount - skipped")
-        except FileNotFoundError:
-            print(f"Error: File '{filename}' not found")
-
-        return sales_amounts
-
-    # Calculate statistics
-    def calculate_total(sales_amounts):
-        return sum(sales_amounts)
-
-    def calculate_average(sales_amounts):
-        if len(sales_amounts) == 0:
-            return 0
-        return calculate_total(sales_amounts) / len(sales_amounts)
-
-    def find_highest_sale(sales_amounts):
-        if len(sales_amounts) == 0:
-            return 0
-        return max(sales_amounts)
-
-    def find_lowest_sale(sales_amounts):
-        if len(sales_amounts) == 0:
-            return 0
-        return min(sales_amounts)
-
-    # Display report
-    def display_sales_report(sales_amounts):
-        print("Sales Report:")
-        print("=" * 40)
-
-        if len(sales_amounts) == 0:
-            print("No valid sales data found.")
-            return
-
-        total = calculate_total(sales_amounts)
-        average = calculate_average(sales_amounts)
-        highest = find_highest_sale(sales_amounts)
-        lowest = find_lowest_sale(sales_amounts)
-
-        print(f"Total Sales:        ${total:,.2f}")
-        print(f"Average Sale:       ${average:,.2f}")
-        print(f"Highest Sale:       ${highest:,.2f}")
-        print(f"Lowest Sale:        ${lowest:,.2f}")
-        print(f"Number of Sales:    {len(sales_amounts)}")
-        print("=" * 40)
-
-    # Main program flow
-    if __name__ == "__main__":
-        filename = "sales.csv"
-        print(f"Reading sales from {filename}...")
-        sales_amounts = read_sales_data(filename)
-        display_sales_report(sales_amounts)
-    ```
-
-## Run the program
-
-1. Run the program from the terminal:
-
-    ```bash
-    python sales_report.py
-    ```
-
-1. You should see the following output:
+2. Run the program. The report prints, and each bad row is reported:
 
     ```output
     Reading sales from sales.csv...
-    Line 4: Invalid amount - skipped
-    Line 6: Missing data - skipped
-    Sales Report:
+    Line 4: could not convert string to float: 'INVALID' - skipped
+    Line 6: row is missing the amount - skipped
+    Line 8: amount must be greater than zero - skipped
+    Sales Report
     ========================================
     Total Sales:        $5,250.00
     Average Sale:       $1,312.50
@@ -353,38 +137,164 @@ The last piece ties everything together: read the data, then display the report.
     ========================================
     ```
 
-    The program skipped the two bad records, reported what was wrong with each, and calculated the statistics from the four valid sales.
+### Handle a missing file
 
-1. Test the error handling for a missing file. Change `filename = "sales.csv"` to `filename = "missing.csv"` and run the program again. You should see:
+`read_sales_data` shouldn't decide what happens when the file is missing. The code that calls it should. When the file doesn't exist, `open()` raises a `FileNotFoundError`, and the exception passes up to the caller. You catch it in the main program flow.
+
+1. Beneath the `# If the file isn't found, print an error message and use an empty list` comment, update the code to the following:
+
+    ```python
+    try:
+        sales_amounts = read_sales_data(filename)
+    except FileNotFoundError:
+        print(f"Error: File '{filename}' not found")
+        sales_amounts = []
+    ```
+
+    - The call to `read_sales_data` moves inside the `try` block.
+    - `except FileNotFoundError` prints a clear message instead of a traceback.
+    - `sales_amounts = []` gives `display_sales_report` an empty list, so it prints its "No valid sales data found." message and the program ends normally.
+
+1. To test it, beneath the `# Main program flow` comment, update the `filename` line to the following:
+
+    ```python
+    filename = "missing.csv"
+    ```
+
+1. Run the program:
 
     ```output
     Reading sales from missing.csv...
     Error: File 'missing.csv' not found
-    Sales Report:
+    Sales Report
     ========================================
     No valid sales data found.
     ```
 
-    Change the file name back to `sales.csv` when you're done.
+1. Beneath the `# Main program flow` comment, update the `filename` line back to the following:
 
-## Extend with GitHub Copilot
+    ```python
+    filename = "sales.csv"
+    ```
 
-Now that the report generator is working, use GitHub Copilot to extend it. Open the Copilot Chat panel in VS Code (**Ctrl+Alt+I**) and try the following prompts.
+### Reject an empty list
 
-**Reject negative amounts**
+`display_sales_report` checks for an empty list before it calls `calculate_average`. But other code might call `calculate_average` directly. With an empty list, the function fails with `ZeroDivisionError`, which doesn't explain the real problem. You add a check that raises a clearer exception.
 
-> "In my `read_sales_data` function, how can I skip any amount that is zero or negative and report it like the other bad records?"
+1. Beneath the `# Raise a ValueError if the list of sales amounts is empty` comment, add the following lines:
 
-This prompt shows how to add another validation check inside the loop. Notice how you can reuse the same `continue` pattern you used for missing data.
+    ```python
+    if len(sales_amounts) == 0:
+        raise ValueError("Can't calculate the average of an empty list")
+    ```
 
-**Filter high-value sales**
+    - The `if` statement checks the input before the calculation runs.
+    - `raise ValueError(...)` stops the function with a message that explains what went wrong. The caller decides how to respond.
 
-> "Write a function that takes the list of sales amounts and a minimum value, and returns only the sales at or above that value."
+1. Run the program. The output doesn't change, because `display_sales_report` never passes an empty list. You confirm the new check with a unit test later in this exercise.
 
-This prompt demonstrates a function with two parameters that returns a new list. You can then call it from the main program and display the results separately.
+## Document the function
 
-**Save the report to a file**
+You changed what `calculate_average` does for an empty list, but a reader can't tell that from the function's first line. You add type hints and a docstring so they know what to pass in, what comes back, and what can go wrong.
 
-> "How can I write the sales report to a text file instead of only printing it?"
+1. Beneath the `# Add type hints and a docstring that describes the ValueError` comment, update the function definition to the following:
 
-This prompt introduces writing to files. Notice how `with open(..., "w")` mirrors the reading code you wrote earlier.
+    ```python
+    def calculate_average(sales_amounts: list[float]) -> float:
+        """Return the average of the sales amounts.
+
+        Raises ValueError if the list is empty.
+        """
+    ```
+
+    - `list[float]` shows that the function expects a list of numbers, and `-> float` shows that it returns a number.
+    - The docstring describes the result and the exception that you added.
+    - The `if` statement and the `return` line beneath the docstring stay the same.
+
+1. Beneath the `# Display report` comment, hover over `calculate_average` in the `display_sales_report` function. VS Code shows the docstring and the type hints.
+
+    `parse_sales_row` already has both, so you can use it as a model.
+
+## Add unit tests
+
+Tests confirm that your error handling keeps working when the code changes. You write one test for each place where the program rejects bad input.
+
+1. Open `test_sales_report.py`. It has two tests for normal input and two comments that describe the tests you add.
+
+1. Beneath the `# Test that calculate_average raises ValueError for an empty list` comment, add the following test:
+
+    ```python
+    def test_calculate_average_empty_list(self):
+        with self.assertRaises(ValueError):
+            calculate_average([])
+    ```
+
+    - `assertRaises` passes only when the code inside the `with` block raises the exception. If `calculate_average([])` returns a value or raises a different exception, the test fails.
+    - This test confirms the check that you added to `calculate_average`.
+
+1. Beneath the `# Test that parse_sales_row raises ValueError for an amount that isn't a number` comment, add the following test:
+
+    ```python
+    def test_parse_sales_row_invalid_amount(self):
+        with self.assertRaises(ValueError):
+            parse_sales_row("2024-01-15,Widget C,INVALID")
+    ```
+
+    - The test passes a row with the text `INVALID` where the amount belongs.
+    - This test confirms the validation in `parse_sales_row`.
+
+    Keep both tests indented inside the `TestSalesReport` class, at the same level as the existing tests.
+
+1. Run the tests from the terminal:
+
+    ```bash
+    python -m unittest test_sales_report -v
+    ```
+
+    ```output
+    test_calculate_average (test_sales_report.TestSalesReport.test_calculate_average) ... ok
+    test_calculate_average_empty_list (test_sales_report.TestSalesReport.test_calculate_average_empty_list) ... ok
+    test_parse_sales_row (test_sales_report.TestSalesReport.test_parse_sales_row) ... ok
+    test_parse_sales_row_invalid_amount (test_sales_report.TestSalesReport.test_parse_sales_row_invalid_amount) ... ok
+
+    ----------------------------------------------------------------------
+    Ran 4 tests in 0.001s
+
+    OK
+    ```
+
+    > **Note**: The test names in the output depend on your Python version. Versions earlier than 3.11 print `test_calculate_average (test_sales_report.TestSalesReport)`.
+
+## Practice with GitHub Copilot
+
+The program handles the problems you knew about. Use GitHub Copilot to look for the ones you didn't. Open the Copilot Chat panel in VS Code (**Ctrl+Alt+I**) and try the following prompts. Copilot can make mistakes, so read each response, and run the program and the tests before you accept a change.
+
+**Document the rest of the code**
+
+> "Add a docstring and type hints to `read_sales_data` and `display_sales_report`. Describe what each function does, what it returns, and what it prints."
+
+This prompt applies the same documentation you added to `calculate_average`. Check the result. Does the `read_sales_data` docstring mention the skipped rows and the `FileNotFoundError` that it can raise? Are the type hints correct?
+
+**Find the gaps**
+
+> "What inputs could make `read_sales_data` crash or report misleading results? Don't change the code."
+
+This prompt asks Copilot to review the code without editing it. Review the list it gives you. To try one possible gap, create an empty file named `empty.csv` in the exercise folder. Then beneath the `# Main program flow` comment, update the `filename` line to the following:
+
+```python
+filename = "empty.csv"
+```
+
+Run the program. It crashes with `StopIteration`, because `next(file)` finds no header row. Update the `filename` line back to the following:
+
+```python
+filename = "sales.csv"
+```
+
+**Fix the gap and prove the fix**
+
+> "Update `read_sales_data` so that an empty file prints a clear message and returns an empty list. Then add a unit test that checks the fix."
+
+This prompt asks for both a code change and a test that proves it works. Review the change. Run the program with `empty.csv` and `sales.csv`, then run the tests again. Keep the change only if the program and all the tests pass.
+
+You started with a program that crashed on real data. You now have one that reports bad rows, handles missing and empty files, explains itself, and has tests that catch regressions.
