@@ -57,6 +57,12 @@ You'll write and run your code in Visual Studio Code. The starter code for this 
 
 1. Make sure your Python environment is active. You should see a Python version displayed in the bottom status bar. If you see a warning, select it and choose your installed Python interpreter.
 
+1. Open a terminal (**Terminal > New Terminal**) and change to the exercise folder:
+
+    ```bash
+    cd Labfiles/05-create-guess-the-number-game
+    ```
+
 ## Pick a secret number
 
 Every guessing game needs a target. You'll use Python's built-in `random` module to pick a random whole number between 1 and 20.
@@ -82,7 +88,7 @@ Every guessing game needs a target. You'll use Python's built-in `random` module
     - `random.randint(1, 20)` returns a random whole number **including** both 1 and 20.
     - `max_guesses` and `guess_count` will control how the loop runs.
 
-1. Select the **▶ Run Python File** button in the top-right corner of the editor, or open the terminal (**Terminal > New Terminal**) and run:
+1. Select the **▶ Run Python File** button in the top-right corner of the editor, or run the following command in the terminal:
 
     ```bash
     python game.py

@@ -66,6 +66,12 @@ You'll write and run your code in Visual Studio Code. The starter code for this 
 
 2. Make sure your Python environment is active. You should see a Python version displayed in the bottom status bar. If you see a warning, select it and choose your installed Python interpreter.
 
+3. Open a terminal (**Terminal > New Terminal**) and change to the exercise folder:
+
+    ```bash
+    cd Labfiles/04-create-rock-paper-scissors-game
+    ```
+
 ## Display the game title
 
 1. Beneath the `# Display the game title` comment, add the following lines:
@@ -75,7 +81,7 @@ You'll write and run your code in Visual Studio Code. The starter code for this 
     print("-" * 23)
     ```
 
-1. Select the **▶ Run Python File** button in the top-right corner, or open the terminal (**Terminal > New Terminal**) and run:
+1. Select the **▶ Run Python File** button in the top-right corner, or run the following command in the terminal:
 
     ```bash
     python game.py

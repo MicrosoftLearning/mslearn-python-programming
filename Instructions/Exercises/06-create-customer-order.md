@@ -79,6 +79,12 @@ You'll write and run your code in Visual Studio Code. The starter code for this 
 
 3. Make sure your Python environment is active. You should see a Python version displayed in the bottom status bar. If you see a warning, select it and choose your installed Python interpreter.
 
+4. Open a terminal (**Terminal > New Terminal**) and change to the exercise folder:
+
+    ```bash
+    cd Labfiles/06-create-customer-order
+    ```
+
 ## Initialize the menu dictionary
 
 You'll represent the shop's menu as a **dictionary**. Each key is the name of a menu item, and each value is the price of that item.
@@ -127,7 +133,7 @@ Before the customer types anything, they need to know what's on offer. You'll lo
     - `.capitalize()` makes the item name look nicer in the output (`Espresso` instead of `espresso`).
     - `:.2f` formats the price with exactly two decimal places (e.g., `3.00` instead of `3.0`).
 
-2. Select the **▶ Run Python File** button in the top-right corner of the editor, or open the terminal (**Terminal > New Terminal**) and run:
+2. Select the **▶ Run Python File** button in the top-right corner of the editor, or run the following command in the terminal:
 
     ```bash
     python shop.py

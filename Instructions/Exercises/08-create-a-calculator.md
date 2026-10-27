@@ -54,6 +54,12 @@ You'll write and run your code in Visual Studio Code. The starter code for this 
 
 1. Make sure your Python environment is active. You should see a Python version displayed in the bottom status bar. If you see a warning, select it and choose your installed Python interpreter.
 
+1. Open a terminal (**Terminal > New Terminal**) and change to the exercise folder:
+
+    ```bash
+    cd Labfiles/08-create-a-calculator
+    ```
+
 ## Define functions for each operation
 
 Instead of writing the arithmetic inline, you'll wrap each operation in its own function. Each function takes two parameters and **returns** a result — that way, the rest of the program doesn't have to know how the math is done.
@@ -79,7 +85,7 @@ Instead of writing the arithmetic inline, you'll wrap each operation in its own 
     - Each function takes two **parameters** (`a` and `b`) and gives back a value with `return`.
     - `divide` guards against division by zero by returning `None` — a special value that means "no result." The main loop will check for it and display a friendly message.
 
-1. Select the **▶ Run Python File** button in the top-right corner of the editor, or open the terminal (**Terminal > New Terminal**) and run:
+1. Select the **▶ Run Python File** button in the top-right corner of the editor, or run the following command in the terminal:
 
     ```bash
     python calculator.py

@@ -38,8 +38,13 @@ You'll write and run your code in Visual Studio Code. The starter code for this 
 
 Every Python project should have its own virtual environment so its packages stay separate from your other work.
 
-1. Open the integrated VS Code terminal by selecting **Terminal > New Terminal**. Make sure the terminal is set to your project folder — you should see a path ending in `03-create-personalized-banner`.
+1. Open the integrated VS Code terminal by selecting **Terminal > New Terminal**, and change to the exercise folder:
 
+    ```bash
+    cd Labfiles/03-create-personalized-banner
+    ```
+
+    The terminal prompt should now end in `03-create-personalized-banner`.
 
 1. In the terminal, create a virtual environment named `.venv`:
 

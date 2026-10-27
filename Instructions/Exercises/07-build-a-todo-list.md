@@ -83,6 +83,12 @@ You'll write and run your code in Visual Studio Code. The starter code for this 
 
 1. Make sure your Python environment is active. You should see a Python version displayed in the bottom status bar. If you see a warning, select it and choose your installed Python interpreter.
 
+1. Open a terminal (**Terminal > New Terminal**) and change to the exercise folder. Your program saves tasks to a file in the folder it runs from, so you'll run it from this terminal:
+
+    ```bash
+    cd Labfiles/07-build-a-todo-list
+    ```
+
 ## Open the file and read the tasks
 
 When the user chooses `1`, you need to open the file that stores your tasks and load its contents into a list you can loop through. You'll use the `with` statement, which opens the file and automatically closes it when you're done.
@@ -131,7 +137,7 @@ When the user chooses `2`, they'll type a task and it needs to be saved. You'll 
 
 Your program is complete. Time to try it out.
 
-1. Select the **▶ Run Python File** button in the top-right corner of the editor, or open the terminal (**Terminal > New Terminal**) and run:
+1. In the terminal, run the program:
 
     ```bash
     python todo.py
