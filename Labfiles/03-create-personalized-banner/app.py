@@ -1,7 +1,13 @@
-# Load the pyfiglet package
+ # Load the pyfiglet package
+import pyfiglet
 
-# Ask the user for their name
+ # Ask the user for their name
+name = input("What is your name? ")
+name = name.strip()
 
-# Turn the name into a banner
+ # Turn the name into a banner
+banner = pyfiglet.figlet_format(name)
 
-# Print a greeting
+ # Print a greeting
+print(banner)
+print(f"Hello, {name.upper()}! Welcome to VS Code.")
